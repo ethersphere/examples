@@ -1,30 +1,27 @@
-# React + TypeScript + Vite
+# React + Vite + (typescript)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a sample project that shows off the functionalities of the Swarm network, and serves as a simple example for developers looking to build a dApp that uses the decentralised Swarm storage with the Vite Frontend Tooling.
 
-Currently, two official plugins are available:
+## Dev Stacks
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Node.js 16 or higher (LTS)
+2. Vite as the bundler
+3. Modern React (functional components)
+4. Latest @ethersphere/bee-js version
 
-## Expanding the ESLint configuration
+### Functionality
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. List available postage batches
+2. Create new postage batch
+3. Upload file(s)
+4. Access to uploaded file
 
-- Configure the top-level `parserOptions` property like this:
+### Usage
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+To use the app, you should have a Bee node running either locally or remotely for which you're going to need the exposed url/port to connect to via the home page of the app.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Install dependencies, start the app and generate a static version of app
+
+1. `npm install`
+2. `npm start`
+3. `npm run build`
