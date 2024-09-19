@@ -1,0 +1,275 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --swarm-yellow: #eab308
+}
+
+body {
+    font-size: 16px;
+}
+
+input,
+select {
+    width: 100%;
+    min-height: 60px;
+    outline: none;
+    padding: 12px 12px;
+    border: 1px solid#ccc;
+    border-radius: 4px;
+    margin: 8px 0;
+    resize: vertical;
+    color: #333;
+    font-size: 1.2rem;
+}
+
+input::placeholder {
+    color: #999;
+
+}
+
+input:focus {
+    border: 3px solid rgb(195, 195, 195);
+}
+
+input[type=text] {
+    font-size: 1rem;
+}
+
+input[type=button],
+input[type=submit],
+input[type=reset] {
+    background-color: var(--swarm-yellow);
+    border: none;
+    color: #000;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 24px;
+    width: 100%;
+}
+
+input[type=file] {
+    border: none;
+    margin-top: 42px;
+    padding: 0;
+    cursor: pointer;
+    font-size: 24px;
+    width: 80%;
+}
+
+input[type=checkbox]:checked {
+    accent-color: var(--swarm-yellow);
+}
+
+input[type=radio]:checked {
+    accent-color: var(--swarm-yellow);
+}
+
+button {
+    background-color: var(--swarm-yellow);
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+input[type=button]:hover,
+input[type=submit]:hover,
+input[type=reset]:hover {
+    background-color: var(--swarm-yellow);
+    color: #000;
+}
+
+.container {
+    max-width: 1200px;
+    border-radius: 4px;
+    padding: 20px;
+    margin: auto;
+}
+
+.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 20px;
+}
+
+.col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 8px;
+}
+
+.col-50 {
+    float: left;
+    width: 50%;
+    margin-top: 8px;
+}
+
+.row {
+    padding: 8px;
+    margin-bottom: 24px;
+}
+
+.row::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+p {
+    font-size: medium;
+}
+
+.error {
+    color: tomato;
+    font-size: 1.25rem;
+}
+
+@media screen and (max-width:600px) {
+
+    .col-25,
+    .col-75,
+    input[type=submit],
+    input[type=submit],
+    input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+    }
+
+    .postageStamps li .unit {
+        display: flex;
+        flex-direction: column;
+
+    }
+}
+
+.postageStamps {
+    display: "flex";
+    justify-content: "space-between";
+    overflow-x: scroll;
+
+}
+
+.postageStamps label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+    font-size: 1.2rem;
+}
+
+.postageStamps li {
+    padding: 16px;
+    margin-bottom: 24px;
+    border: 1px solid #ccc;
+}
+
+.postageStamps li .unit {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    max-width: 250px;
+}
+
+.postageStamps li .label {
+    font-weight: 700;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.bg {
+    background-color: #f1f1f1;
+}
+
+.upload-options label {
+    font-size: 1.2rem;
+}
+
+.upload-options input[type=checkbox] {
+    width: 24px;
+    min-height: 24px;
+    justify-items: center;
+    padding: 0;
+}
+
+form {
+    font-size: 1.2rem;
+}
+
+.block {
+    padding: 8px 0;
+}
+
+.block span {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    margin: 4px 0;
+}
+
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.text-clip {
+    text-overflow: clip;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.hover\:text-clip:hover {
+    text-overflow: clip;
+}
+
+.app-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20%;
+    padding: 24px;
+
+}
+
+.app-container-chaid {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+
+.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}

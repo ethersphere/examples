@@ -1,0 +1,9 @@
+.body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    background-color: rgb(202, 202, 202);
+    padding: 24px;
+    
+}
