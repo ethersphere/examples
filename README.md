@@ -1,2 +1,2 @@
-# examples
+# Examples
 Example applications and scripts
