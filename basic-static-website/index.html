@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Swarm + ENS Starter</title>
+  <meta name="description" content="A tiny website ready for Swarm and ENS." />
+  <meta property="og:title" content="Swarm + ENS Starter" />
+  <meta property="og:description" content="A tiny website ready for Swarm and ENS." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="favicon.svg" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="container">
+    <h1>Swarm + ENS Starter</h1>
+    <p class="tagline">A minimal static page suitable for hosting on Swarm and mapping to an ENS name.</p>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>About</h2>
+      <p>This is a small static site intended as the starting point for a Swarm-hosted website that can be resolved via an ENS name.</p>
+      <p>Refer to the documentation for upload and ENS configuration steps.</p>
+    </section>
+
+    <section class="card">
+      <h2>Demo links</h2>
+      <p><a href="does-not-exist">Broken link example</a> (should show the custom 404 page when served from Swarm).</p>
+    </section>
+  </main>
+
+  <footer class="container">
+    <p>Made for Swarm. <span id="year"></span></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
