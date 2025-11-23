@@ -1,0 +1,2 @@
+BEE_RPC_URL=<BEE_API_ENDPOINT> // Default: http://localhost:1633 
+POSTAGE_BATCH_ID=<BATCH_ID>
