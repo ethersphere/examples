@@ -1,13 +1,14 @@
 import { Bee } from "@ethersphere/bee-js"
 import path from "path"
 import { fileURLToPath } from "url"
+import "dotenv/config"
 
 // Recreate __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const bee = new Bee("http://127.0.0.1:1633")
-const postageBatchId = "3d98a22f522377ae9cc2aa3bca7f352fb0ed6b16bad73f0246b0a5c155f367bc"
+const bee = new Bee(process.env.BEE_RPC_URL)
+const postageBatchId = process.env.POSTAGE_BATCH_ID
 
 // Build the folder path safely
 const directoryPath = path.join(__dirname, "directory")

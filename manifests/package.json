@@ -5,12 +5,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node script-01"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ethersphere/bee-js": "^10.1.1"
+    "@ethersphere/bee-js": "^10.1.1",
+    "dotenv": "^17.2.3"
   }
 }
