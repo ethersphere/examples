@@ -1,39 +1,53 @@
+
+import "dotenv/config"
 import { Bee, MantarayNode } from "@ethersphere/bee-js"
-import path from "path"
-import { fileURLToPath } from "url"
-import { printManifest } from './printManifest.js'
+import { printManifestJson } from './manifestToJson.js'
 
-// Recreate __dirname for ES modules
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const bee = new Bee(process.env.BEE_RPC_URL)
+const batchId = process.env.POSTAGE_BATCH_ID
 
-const bee = new Bee('http://127.0.0.1:1633')
-const postageBatchId = "3d98a22f522377ae9cc2aa3bca7f352fb0ed6b16bad73f0246b0a5c155f367bc"
+// We specify the manifest returned from script-01.js here
+const ROOT_MANIFEST = '4d5e6e3eb532131e128b1cd0400ca249f1a6ce5d4005c0b57bf848131300df9d'
 
-// Build the folder path safely
-const directoryPath = path.join(__dirname, "directory")
+async function addFileToManifest() {
+    try {
+        // Load the generated manifest from script-01.js
+        const node = await MantarayNode.unmarshal(bee, ROOT_MANIFEST)
+        await node.loadRecursively(bee)
 
-async function uploadDirectory() {
-  try {
-    console.log("Uploading directory:", directoryPath)
+        // File details for new file
+        const filename = 'new.txt'
+        const content = "Hi, I'm new here."
+        const bytes = new TextEncoder().encode(content)
 
-    // Upload using the resolved directory
-    const { reference } = await bee.uploadFilesFromDirectory(postageBatchId, directoryPath)
+        // Upload raw file data 
+        // Note we use "bee.uploadData()", not "bee.uploadFile()", since we need the root reference hash of the content, not a manifest reference. 
+        const { reference } = await bee.uploadData(batchId, bytes)
+        console.log('Uploaded raw reference:', reference.toHex())
 
-    console.log("Directory uploaded successfully!")
-    console.log("Manifest reference:", reference.toHex())
+        // Metadata must be a plain JS object — NOT a Map or Uint8Array
+        const metadata = {
+            'Content-Type': 'text/plain; charset=utf-8',
+            'Filename': filename,
+        }
 
-    // Load the generated manifest
-    const node = await MantarayNode.unmarshal(bee, reference)
-    await node.loadRecursively(bee)
+        // Insert the new file data into our new manifest
+        node.addFork(filename, reference, metadata)
 
-    // Print raw manifest
-    console.log('\n--- Manifest Tree ---')
-    console.log(node)
+        // Save and print updated manifest
+        const newManifest = await node.saveRecursively(bee, batchId)
+        const newReference = newManifest.reference
+        console.log('Updated manifest hash:', newReference.toHex())
+        printManifestJson(node)
 
-  } catch (error) {
-    console.error("Error during upload or download:", error.message)
-  }
+        // Download new file and print its contents
+        const newFile = await bee.downloadFile(newReference, "new.txt")
+        console.log("new.txt:", newFile.data.toUtf8())
+
+    }
+    catch (error) {
+        console.error("Error during upload or download:", error.message)
+    }
 }
 
-uploadDirectory()
+addFileToManifest()
