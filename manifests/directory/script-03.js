@@ -1,39 +1,65 @@
+import "dotenv/config"
 import { Bee, MantarayNode } from "@ethersphere/bee-js"
-import path from "path"
-import { fileURLToPath } from "url"
-import { printManifest } from './printManifest.js'
+import { printManifestJson } from './manifestToJson.js'
 
-// Recreate __dirname for ES modules
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const bee = new Bee(process.env.BEERPC_URL || process.env.BEE_RPC_URL)
+const batchId = process.env.POSTAGE_BATCH_ID
 
-const bee = new Bee('http://127.0.0.1:1633')
-const postageBatchId = "3d98a22f522377ae9cc2aa3bca7f352fb0ed6b16bad73f0246b0a5c155f367bc"
+// Manifest returned from script-02.js
+const ROOT_MANIFEST = '4f67218844a814655c8d81aae4c4286a142318d672113973360c33c7930ce2f5'
 
-// Build the folder path safely
-const directoryPath = path.join(__dirname, "directory")
+async function moveFileInManifest() {
+    try {
+        // Load manifest generated in script-02
+        const node = await MantarayNode.unmarshal(bee, ROOT_MANIFEST)
+        await node.loadRecursively(bee)
 
-async function uploadDirectory() {
-  try {
-    console.log("Uploading directory:", directoryPath)
+        // Reload manifest to capture original file reference *before* deletion
+        const original = await MantarayNode.unmarshal(bee, ROOT_MANIFEST)
+        await original.loadRecursively(bee)
 
-    // Upload using the resolved directory
-    const { reference } = await bee.uploadFilesFromDirectory(postageBatchId, directoryPath)
+        const existing = original.find("new.txt")
+        if (!existing) {
+            throw new Error("Could not retrieve file reference for new.txt — run script-02.js first.")
+        }
 
-    console.log("Directory uploaded successfully!")
-    console.log("Manifest reference:", reference.toHex())
-    
-    // Load the generated manifest
-    const node = await MantarayNode.unmarshal(bee, reference)
-    await node.loadRecursively(bee)
+        const fileRef = existing.targetAddress
 
-    // Print manifest in human readable format
-    console.log('\n--- Manifest Tree ---')
-    printManifest(node)
+        // STEP 1 — Remove /new.txt
+        node.removeFork("new.txt")
+        console.log("Removed /new.txt from manifest.")
 
-  } catch (error) {
-    console.error("Error during upload or download:", error.message)
-  }
+        // STEP 2 — Re-add under /nested/deeper/new.txt
+        const newPath = "nested/deeper/new.txt"
+
+        node.addFork(
+            newPath,
+            fileRef,
+            {
+                "Content-Type": "text/plain; charset=utf-8",
+                "Filename": "new.txt"
+            }
+        )
+
+        console.log(`Added file under /${newPath}`)
+
+        // STEP 3 — Save updated manifest
+        const updated = await node.saveRecursively(bee, batchId)
+        const newManifestRef = updated.reference.toHex()
+
+        console.log("Updated manifest hash:", newManifestRef)
+
+        // STEP 4 — Print JSON
+        printManifestJson(node)
+
+        // STEP 5 — Download the file from its new location and print contents
+        const downloaded = await bee.downloadFile(updated.reference, newPath)
+        console.log(`\nContents of /${newPath}:`)
+        console.log(downloaded.data.toUtf8())
+
+    } catch (error) {
+        console.error("Error while modifying manifest:", error.message)
+    }
 }
 
-uploadDirectory()
+moveFileInManifest()
