@@ -1,0 +1,17 @@
+{
+  "name": "utilities",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Example applications and scripts",
+  "main": "upload.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ethersphere/bee-js": "^10.1.1",
+    "dotenv": "^17.2.3"
+  }
+}
