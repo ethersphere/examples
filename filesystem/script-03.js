@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import { Bee, MantarayNode } from "@ethersphere/bee-js";
-import { printManifestJson } from "../../utils/manifestToJson.js";
+import { printManifestJson } from "../utils/manifestToJson.js";
 
 const bee = new Bee(process.env.BEE_URL);
 const batchId = process.env.BATCH_ID;

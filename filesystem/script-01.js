@@ -4,8 +4,8 @@ dotenv.config();
 import path from "path";
 import { fileURLToPath } from "url";
 import { Bee, MantarayNode } from "@ethersphere/bee-js";
-import { printManifestJson } from "../../utils/manifestToJson.js";
-import { uploadDirectory } from "../../utils/upload-directory.js";
+import { printManifestJson } from "../utils/manifestToJson.js";
+import { uploadDirectory } from "../utils/upload-directory.js";
 
 // Recreate __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -16,7 +16,7 @@ const directoryPath = path.join(__dirname, process.env.UPLOAD_DIR);
 
 async function run() {
   try {
-    const reference = await uploadDirectory(directoryPath, { indexDocument: "root.txt" });
+    const reference = await uploadDirectory(directoryPath, { indexDocument: "disc.jpg" });
 
     console.log("Manifest reference:", reference.toHex());
 
