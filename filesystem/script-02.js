@@ -8,11 +8,11 @@ const bee = new Bee(process.env.BEE_URL);
 const batchId = process.env.BATCH_ID;
 
 // IMPORTANT: replace this with the output of script-01.js each time you re-upload
-const ROOT_MANIFEST = process.env.SCRIPT_02_MANIFEST;
+const MANIFEST_REFERENCE = process.env.SCRIPT_02_MANIFEST;
 
 async function addFileToManifest() {
   try {
-    const node = await MantarayNode.unmarshal(bee, ROOT_MANIFEST);
+    const node = await MantarayNode.unmarshal(bee, MANIFEST_REFERENCE);
     await node.loadRecursively(bee);
 
     const filename = "new.txt";
