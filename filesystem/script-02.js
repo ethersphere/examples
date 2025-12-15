@@ -32,7 +32,7 @@ async function addFileToManifest() {
     const newManifest = await node.saveRecursively(bee, batchId);
     const newReference = newManifest.reference.toHex();
 
-    console.log("Updated manifest hash:", newReference);
+    console.log("Updated manifest reference:", newReference);
     printManifestJson(node);
 
     const newFile = await bee.downloadFile(newManifest.reference, filename);

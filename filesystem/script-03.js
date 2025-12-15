@@ -37,7 +37,7 @@ async function moveFileInManifest() {
     const updated = await node.saveRecursively(bee, batchId);
     const newManifestRef = updated.reference.toHex();
 
-    console.log("Updated manifest hash:", newManifestRef);
+    console.log("Updated manifest reference:", newManifestRef);
 
     printManifestJson(node);
 
