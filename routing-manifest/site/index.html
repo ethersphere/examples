@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Swarm Routing Demo</title>
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+<body>
+  <header class="container">
+    <h1>Swarm Routing Demo</h1>
+    <p class="subtitle">
+      This site is intentionally simple. It exists to prove routing rules, not to win design awards.
+    </p>
+
+    <nav class="nav">
+      <a href="./index.html">Home (file)</a>
+      <a href="./about.html">About (file)</a>
+      <a href="./contact.html">Contact (file)</a>
+      <span class="spacer"></span>
+      <a href="./about">/about (clean URL)</a>
+      <a href="./about/">/about/ (clean URL)</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>What this demonstrates</h2>
+      <ul>
+        <li><strong>Exact file paths</strong> work immediately: <code>/about.html</code>, <code>/contact.html</code></li>
+        <li><strong>Clean URLs</strong> like <code>/about</code> fail until you add manifest aliases</li>
+        <li><strong>404 behavior</strong>: hitting a missing file should return <code>404.html</code></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Try these links</h2>
+      <p>
+        These will work right away (no manifest edits):
+      </p>
+      <ul>
+        <li><a href="./about.html">/about.html</a></li>
+        <li><a href="./contact.html">/contact.html</a></li>
+      </ul>
+
+      <p>
+        These will only work after you add aliases like <code>about</code> → <code>about.html</code>:
+      </p>
+      <ul>
+        <li><a href="./about">/about</a></li>
+        <li><a href="./about/">/about/</a></li>
+      </ul>
+
+      <p>
+        This should trigger your <code>errorDocument</code>:
+      </p>
+      <ul>
+        <li><a href="./this-page-does-not-exist">/this-page-does-not-exist</a></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Redirect test</h2>
+      <p>
+        If you later “redirect” <code>/old-page.html</code> to new content by overwriting its manifest entry,
+        you can point it to:
+      </p>
+      <ul>
+        <li><a href="./new-page.html">/new-page.html</a></li>
+      </ul>
+      <p class="hint">
+        (No HTTP redirects on Swarm—this is “redirect-like” behavior via manifest remapping.)
+      </p>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <small>Swarm routing demo • static files only • zero backend • maximum honesty</small>
+  </footer>
+
+  <script src="./assets/nav.js"></script>
+</body>
+</html>

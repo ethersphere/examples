@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>404 • Not Found</title>
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+<body>
+  <header class="container">
+    <h1>404</h1>
+    <p class="subtitle">That path doesn’t map to a real file in the manifest.</p>
+
+    <nav class="nav">
+      <a href="./index.html">Home</a>
+      <a href="./about.html">About</a>
+      <a href="./contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>What to check</h2>
+      <ul>
+        <li>If you expected <code>/about</code> to work, add a manifest alias for <code>about</code> and <code>about/</code>.</li>
+        <li>If you expected a directory index route, ensure you created <code>/about/index.html</code> and mapped <code>about/</code>.</li>
+        <li>If you expected a redirect, ensure the old path points at the new content reference.</li>
+      </ul>
+
+      <p class="hint">
+        Reminder: Swarm doesn’t “rewrite” URLs. If the manifest doesn’t have an entry for the path, you’re here.
+      </p>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <small>404.html is served because you set <code>errorDocument</code> during upload.</small>
+  </footer>
+
+  <script src="./assets/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About • Swarm Routing Demo</title>
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+<body>
+  <header class="container">
+    <h1>About</h1>
+    <nav class="nav">
+      <a href="./index.html">Home</a>
+      <a class="active" href="./about.html">About</a>
+      <a href="./contact.html">Contact</a>
+      <span class="spacer"></span>
+      <a href="./about">/about</a>
+      <a href="./about/">/about/</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Why this page exists</h2>
+      <p>
+        This file is named <code>about.html</code> so that “clean URL” routing can be demonstrated
+        by mapping <code>/about</code> and <code>/about/</code> to it in the manifest.
+      </p>
+      <p class="hint">
+        Without manifest edits, <code>/about</code> is treated as a literal file called <code>about</code> (no extension),
+        which won’t exist.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>What you’ll map in the manifest</h2>
+      <ul>
+        <li><code>about</code> → reference for <code>about.html</code></li>
+        <li><code>about/</code> → same reference</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <small>Tip: open DevTools → Network and watch which file Swarm actually serves.</small>
+  </footer>
+
+  <script src="./assets/nav.js"></script>
+</body>
+</html>
