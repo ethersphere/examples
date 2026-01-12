@@ -1,0 +1,16 @@
+{
+  "name": "routing-manifest",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "This is a minimal static website intended for **Manifest-Based Routing** with **Strategy A (aliases)**.",
+  "main": "upload.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.3"
+  }
+}
