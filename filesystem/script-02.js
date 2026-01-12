@@ -7,40 +7,56 @@ import { printManifestJson } from "../utils/manifestToJson.js";
 const bee = new Bee(process.env.BEE_URL);
 const batchId = process.env.BATCH_ID;
 
-// IMPORTANT: replace this with the output of script-01.js each time you re-upload
-const MANIFEST_REFERENCE = process.env.SCRIPT_02_MANIFEST;
+// IMPORTANT: replace this with the output of script-01.js in your .env file each time you re-upload with new contents
+const manifestReference = process.env.SCRIPT_02_MANIFEST;
 
-async function addFileToManifest() {
+async function run() {
   try {
-    const node = await MantarayNode.unmarshal(bee, MANIFEST_REFERENCE);
+    // Load existing manifest
+    const node = await MantarayNode.unmarshal(bee, manifestReference);
     await node.loadRecursively(bee);
 
+    // New file to add
     const filename = "new.txt";
     const content = "Hi, I'm new here.";
     const bytes = new TextEncoder().encode(content);
 
-    const { reference } = await bee.uploadData(batchId, bytes);
-    console.log("Uploaded raw reference:", reference.toHex());
+    // Upload the file content (this is a *file/data reference*, not a manifest reference)
+    const { reference: fileReference } = await bee.uploadData(batchId, bytes);
+
+    console.log("\nNew file content reference:", fileReference.toHex(), "\n");
+    console.log(
+      "New file direct URL:",
+      `${process.env.BEE_URL.replace(/\/+$/, "")}/bzz/${fileReference.toHex()}\n`
+    );
 
     const metadata = {
       "Content-Type": "text/plain; charset=utf-8",
       Filename: filename,
     };
 
-    node.addFork(filename, reference, metadata);
+    // Add the file into the manifest
+    node.addFork(filename, fileReference, metadata);
 
-    const newManifest = await node.saveRecursively(bee, batchId);
-    const newReference = newManifest.reference.toHex();
+    // Save updated manifest
+    const updatedManifest = await node.saveRecursively(bee, batchId);
+    const updatedManifestReference = updatedManifest.reference.toHex();
 
-    console.log("Updated manifest reference:", newReference);
+    console.log("Updated manifest reference:", updatedManifestReference);
+    console.log(
+      "Updated manifest URL:",
+      `${process.env.BEE_URL.replace(/\/+$/, "")}/bzz/${updatedManifestReference}/\n`
+    );
+
+    console.log("\n--- Updated Manifest Tree ---\n");
     printManifestJson(node);
 
-    const newFile = await bee.downloadFile(newManifest.reference, filename);
-    console.log("new.txt:", newFile.data.toUtf8());
-
+    // Verify file is accessible through the updated manifest
+    const newFile = await bee.downloadFile(updatedManifest.reference, filename);
+    console.log(`${filename}:`, newFile.data.toUtf8());
   } catch (error) {
     console.error("Error during upload or download:", error.message);
   }
 }
 
-addFileToManifest();
+run();

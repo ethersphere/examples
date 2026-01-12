@@ -18,7 +18,8 @@ async function run() {
   try {
     const reference = await uploadDirectory(directoryPath, { indexDocument: "disc.jpg" });
 
-    console.log("Manifest reference:", reference.toHex());
+    console.log("\nManifest reference:", reference.toHex(), "\n");
+    console.log("\nURL:", `${process.env.BEE_URL.replace(/\/+$/, "")}/bzz/${reference.toHex()}/\n`);
 
     const root = await bee.downloadFile(reference, "root.txt");
 
@@ -31,8 +32,11 @@ async function run() {
     const node = await MantarayNode.unmarshal(bee, reference);
     await node.loadRecursively(bee);
 
-    console.log("\n--- Manifest Tree ---");
+    console.log("\n--- Manifest Tree ---\n");
     printManifestJson(node);
+
+   
+
 
   } catch (error) {
     console.error("Error during upload or download:", error.message);
