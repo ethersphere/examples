@@ -1,0 +1,14 @@
+[
+  {
+    "slug": "hello-world",
+    "title": "Hello Swarm!",
+    "body": "Updated: this is my first post, now improved.",
+    "date": "2026-03-16T09:54:04.581Z"
+  },
+  {
+    "slug": "xss-test",
+    "title": "<script>alert(1)</script>",
+    "body": "body with <b>html</b>",
+    "date": "2026-03-16T09:55:37.180Z"
+  }
+]

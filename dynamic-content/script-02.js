@@ -41,7 +41,7 @@ console.log("Feed updated at index 0");
 
 // Read the latest reference from the feed
 const reader = bee.makeFeedReader(topic, owner);
-const result = await reader.download();
+const result = await reader.downloadReference();
 console.log("Latest reference:", result.reference.toHex());
 console.log("Current index:", result.feedIndex.toBigInt());
 
@@ -56,6 +56,6 @@ await writer.upload(batchId, upload2.reference);
 console.log("Feed updated at index 1");
 
 // Reading the feed now returns the updated reference
-const result2 = await reader.download();
+const result2 = await reader.downloadReference();
 console.log("Latest reference:", result2.reference.toHex());
 console.log("Current index:", result2.feedIndex.toBigInt()); // 1n

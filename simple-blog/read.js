@@ -21,7 +21,7 @@ const topic = Topic.fromString(cfg.topic);
 const owner = new EthAddress(cfg.owner);
 const reader = bee.makeFeedReader(topic, owner);
 
-const result = await reader.download();
+const result = await reader.downloadReference();
 
 console.log("Latest content reference:", result.reference.toHex());
 console.log("Feed index:", result.feedIndex.toBigInt());
