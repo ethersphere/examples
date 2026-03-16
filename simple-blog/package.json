@@ -1,0 +1,15 @@
+{
+  "name": "simple-blog",
+  "version": "1.0.0",
+  "description": "A minimal dynamic blog on Swarm — example project for the Dynamic Content guide.",
+  "type": "module",
+  "scripts": {
+    "init": "node init.js",
+    "post": "node post.js",
+    "read": "node read.js"
+  },
+  "dependencies": {
+    "@ethersphere/bee-js": "^9.1.1",
+    "dotenv": "^16.4.7"
+  }
+}

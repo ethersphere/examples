@@ -1,0 +1,10 @@
+{
+  "name": "dynamic-content-examples",
+  "version": "1.0.0",
+  "description": "Example scripts for the Dynamic Content guide — demonstrates immutability, feeds, and feed manifests.",
+  "type": "module",
+  "dependencies": {
+    "@ethersphere/bee-js": "^9.1.1",
+    "dotenv": "^16.4.7"
+  }
+}
