@@ -39,12 +39,9 @@ const writer = bee.makeFeedWriter(topic, pk);
 await writer.upload(batchId, upload.reference);
 console.log("Feed updated at index 0");
 
-// Brief pause to allow the node to index the feed chunk
-await new Promise((r) => setTimeout(r, 1000));
-
-// Read the latest reference from the feed
+// Read the latest reference from the feed (retries until indexed)
 const reader = bee.makeFeedReader(topic, owner);
-const result = await reader.downloadReference();
+const result = await retryFeedRead(() => reader.downloadReference());
 console.log("Latest reference:", result.reference.toHex());
 console.log("Current index:", result.feedIndex.toBigInt());
 
@@ -58,10 +55,58 @@ console.log("\nNew content hash:", upload2.reference.toHex());
 await writer.upload(batchId, upload2.reference);
 console.log("Feed updated at index 1");
 
-// Brief pause to allow the node to index the feed chunk
-await new Promise((r) => setTimeout(r, 1000));
-
-// Reading the feed now returns the updated reference
-const result2 = await reader.downloadReference();
+// Reading the feed now returns the updated reference.
+// Pass minFeedIndex so the retry waits for the new entry, not just any entry.
+const result2 = await retryFeedRead(
+  () => reader.downloadReference(),
+  result.feedIndex.toBigInt() + 1n
+);
 console.log("Latest reference:", result2.reference.toHex());
 console.log("Current index:", result2.feedIndex.toBigInt()); // 1n
+
+// --- Retry helper ---
+
+/**
+ * Retries a feed read function until it returns an entry at or above
+ * minFeedIndex. Logs elapsed time on each attempt and prompts the user
+ * to continue or exit every 10 seconds when running interactively.
+ *
+ * @param {() => Promise<{feedIndex: {toBigInt: () => bigint}, reference: any}>} fn
+ * @param {bigint} minFeedIndex  Minimum feed index to accept (default 0n)
+ * @returns {Promise<any>}       Resolved value of fn once the index requirement is met
+ */
+async function retryFeedRead(fn, minFeedIndex = 0n) {
+  const RETRY_INTERVAL_MS = 1_000;
+  const PROMPT_INTERVAL_MS = 10_000;
+  const start = Date.now();
+  let lastPrompt = start;
+
+  while (true) {
+    try {
+      const value = await fn();
+      if (value.feedIndex.toBigInt() >= minFeedIndex) {
+        if (Date.now() > start + RETRY_INTERVAL_MS) {
+          process.stdout.write("\n"); // clear the retrying line
+        }
+        return value;
+      }
+      // Got a stale entry — treat as a miss and keep retrying
+    } catch {}
+
+    const elapsed = Math.round((Date.now() - start) / 1000);
+    process.stdout.write(
+      `\rFeed not yet indexed, retrying... (${elapsed}s elapsed)  `
+    );
+
+    const now = Date.now();
+    if (process.stdin.isTTY && now - lastPrompt >= PROMPT_INTERVAL_MS) {
+      lastPrompt = now;
+      process.stdout.write(
+        `\nStill waiting after ${elapsed}s. Press Enter to keep retrying, or Ctrl+C to exit: `
+      );
+      await new Promise((resolve) => process.stdin.once("data", resolve));
+    }
+
+    await new Promise((r) => setTimeout(r, RETRY_INTERVAL_MS));
+  }
+}

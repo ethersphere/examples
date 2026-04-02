@@ -1,0 +1,16 @@
+{
+  "name": "multi-author-blog",
+  "version": "1.0.0",
+  "description": "A decentralized multi-author blog on Swarm — example project for the Multi-Author Blog guide.",
+  "type": "module",
+  "scripts": {
+    "init": "node init.js",
+    "add-post": "node add-post.js",
+    "update-index": "node update-index.js",
+    "read": "node read.js"
+  },
+  "dependencies": {
+    "@ethersphere/bee-js": "^9.1.1",
+    "dotenv": "^16.4.7"
+  }
+}
