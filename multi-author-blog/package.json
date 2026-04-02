@@ -1,0 +1,10 @@
+{
+  "name": "multi-author-blog",
+  "version": "1.0.0",
+  "description": "Example scripts for the Multi-Author Blog guide — demonstrates composable feeds where each author publishes independently and an admin aggregates posts into a homepage.",
+  "type": "module",
+  "dependencies": {
+    "@ethersphere/bee-js": "^9.1.1",
+    "dotenv": "^16.4.7"
+  }
+}

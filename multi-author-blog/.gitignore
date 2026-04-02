@@ -1,0 +1,7 @@
+node_modules/
+config.json
+alice-posts.json
+bob-posts.json
+charlie-posts.json
+*.json
+!package.json
