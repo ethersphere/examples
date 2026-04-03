@@ -3,3 +3,4 @@ config.json
 authors.json
 alice-posts.json
 bob-posts.json
+*-posts.json

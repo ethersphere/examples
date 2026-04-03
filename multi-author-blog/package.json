@@ -6,6 +6,7 @@
   "scripts": {
     "init": "node init.js",
     "add-post": "node add-post.js",
+    "add-author": "node add-author.js",
     "update-index": "node update-index.js",
     "read": "node read.js"
   },
