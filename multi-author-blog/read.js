@@ -49,6 +49,6 @@ for (const author of authors) {
 const homeTopic  = Topic.fromString(cfg.topics.home);
 const homeOwner  = new EthAddress(cfg.admin.owner);
 const homeReader = bee.makeFeedReader(homeTopic, homeOwner);
-const homeResult = await homeReader.download();
+const homeResult = await homeReader.downloadReference();
 console.log(`\nHomepage feed at index: ${homeResult.feedIndex.toBigInt()}`);
 console.log(`Homepage URL: ${process.env.BEE_URL}/bzz/${cfg.manifests.home}/`);
